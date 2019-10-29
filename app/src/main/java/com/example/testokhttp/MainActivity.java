@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(@NonNull Message msg) {
+            /**
+             * 当文件下载完成时，弹出提示
+             */
             switch (msg.what){
                 case 1:
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     public void download123(View view) {
         /**
          * 点击按钮弹出对话框，输入文件名下载文件
+         * 扩展名从url中获取，不需要输入
          */
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("文件名");
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 edit_wj = (EditText) v.findViewById(R.id.wenjianming);
                 str_wjm = edit_wj.getText().toString();
 
-                //okhttputils下载大文件
+                // okhttp-utils下载大文件
                 String url = editText.getText().toString();
                 String exname = url.substring(url.lastIndexOf(".",url.length()));
                 OkHttpUtils.get().url(url).build().execute(new FileCallBack("/storage/emulated/0/Test",str_wjm + exname)
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void inProgress(float progress, long total, int id)
                     {
+                        // 使用进度条提示用户下载进度
                         mprogressBar.setProgress((int) (100 * progress));
                         Log.e(TAG, "inProgress :" + (int) (100 * progress));
                         if((int)(100*progress) == 100){
@@ -138,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getimage(View view) {
+        /**
+         * 用get()请求获取网络图片
+         */
 
         String url = "http://images.csdn.net/20150817/1.jpg";
         OkHttpUtils
